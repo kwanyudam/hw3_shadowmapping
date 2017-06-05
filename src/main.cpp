@@ -1,4 +1,99 @@
-#include "../include/main.h"
+#include "../external/Eigen/Core"
+#include "../external/Eigen/Geometry"
+#include <iostream>
+#include <vector>
+#include <GL/gl.h>
+#define GL_GLEXT_PROTOTYPES
+#include <GL/glext.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
+#include <GL/glut.h>
+#include "../include/shadow.h"
+#include "../include/light.h"
+#include "../include/object.h"
+
+#define _USE_MATH_DEFINES
+#include <math.h>
+
+#include <pthread.h>
+using namespace std;
+
+double _fovy=50;
+double _aspect;
+double _near=1, _far=100;
+int _height = 760;
+int _width = 1260;
+
+Eigen::Vector3f eye, lookup, lookat;
+
+Object object;
+vector<Light*> lights;
+vector<Shadow*> shadows;
+
+void displayCB(){
+}
+
+void keyboardCB(unsigned char keyPressed, int x, int y){
+}
+
+void reshapeCB(GLsizei width, GLsizei height){
+}
+
+void glutMouseCB(int button, int state, int x, int y){
+}
+
+void glutMotionCB(int x, int y){
+}
+
+void init(int argc, char** argv){
+	_aspect = (GLfloat)_width / (GLfloat)_height;
+
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
+	glutInitWindowSize(_width, _height);
+	glutCreateWindow("20170325_HW1");
+
+
+	lights.push_back(new Light(
+		GL_LIGHT0,
+		Eigen::Vector3f(0, 20, -20, 1),
+		Eigen::Vector3f(0.1, 0.1, 0.1),
+		Eigen::Vector3f(0.8, 0.8, 0.8)
+		));
+	lights.push_back(new Light(
+		GL_LIGHT0,
+		Eigen::Vector3f(-20, 20, 0, 1),
+		Eigen::Vector3f(0.2, 0.2, 0.2),
+		Eigen::Vector3f(0.4, 0.4, 0.4)
+		));
+	//lights.push_back(new Light());
+
+	eye = Eigen::Vector3f(0, 10, 10);
+	lookat = Eigen::Vector3f(0, 0, 0);
+	lookup = Eigen::Vector3f(0, 1, -1);
+	lookup.normalize();
+
+	object = Object("assets/cow.obj", 0.5);
+
+	//shadows.push_back(new Shadow());
+
+	glutDisplayFunc(displayCB);
+	glutKeyboardFunc(keyboardCB);
+	glutReshapeFunc(reshapeCB);
+	glutMouseFunc(glutMouseCB);
+	glutMotionFunc(glutMotionCB);
+	//glutTimerFunc(timeStep, timerFunc, 0);
+	glutMainLoop();
+}
+
+int main(int argc, char** argv){
+	// Initialize components
+	init(argc, argv);
+
+	return 0;
+}
+
+/*#include "../include/main.h"
 #include "../include/drawobject.h"
 
 #include <pthread.h>
@@ -26,10 +121,6 @@ bool isLightOn[3];
 GLint viewport[4];
 
 void display() {
-	/*glClearColor(1.f, 1.f, 1.f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnabale(GL_DEPTH_TEST);*/
-
 
 	GLfloat grey[] = {0.5, 0.5, 0.5, 1};
 	//Display Light Sources
@@ -257,14 +348,14 @@ void initGL(){
 
 	shadowMap = ShadowMap(width, height, 0);
 
-	/*glClearColor(0, 0, 0, 0);
+	glClearColor(0, 0, 0, 0);
 
 	glClearDepth(1.0f);
 	glEnable(GL_DEPTH_TEST);
 
 	glEnable(GL_TEXTURE_2D);
 
-	glEnable(GL_CULL_FACE);*/
+	glEnable(GL_CULL_FACE);
 
 	glutDisplayFunc(display);
 	glutKeyboardFunc(keyboardCB);
@@ -280,4 +371,4 @@ int main(int argc, char** argv){
 	init();
 	initGL();
 	return 0;
-}
+}*/

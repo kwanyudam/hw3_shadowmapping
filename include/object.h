@@ -1,6 +1,9 @@
-#include "main.h"
+#include <iostream>
+#include <fstream>
 
-class DrawObject{
+using namespace std;
+
+class Object{
 private:
 	Eigen::Vector3d vertices[20000];
 	Eigen::Vector3d normals[20000];
@@ -12,8 +15,8 @@ private:
 
 
 public:
-	DrawObject(){};
-	DrawObject(const char* filename, double scale){
+	Object(){};
+	Object(const char* filename, double scale){
 		_scale = scale;
 
 		cout<<"Loading Object : "<<filename<<" ....\n";
@@ -60,7 +63,7 @@ public:
 		cout<<"Faces : "<<faceCount<<"\n";
 		cout<<"======================\n";
 	};
-	void drawObject(){
+	void render(){
 		//glColor3f(0.8, 0.8, 0.8);
 		GLfloat green[] = {0, 1, 0, 1};
 		glMaterialfv(GL_FRONT, GL_AMBIENT, green);
