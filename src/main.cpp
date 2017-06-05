@@ -26,6 +26,11 @@ bool isLightOn[3];
 GLint viewport[4];
 
 void display() {
+	/*glClearColor(1.f, 1.f, 1.f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnabale(GL_DEPTH_TEST);*/
+
+
 	GLfloat grey[] = {0.5, 0.5, 0.5, 1};
 	//Display Light Sources
 	glEnable(GL_LIGHTING);
@@ -252,14 +257,14 @@ void initGL(){
 
 	shadowMap = ShadowMap(width, height, 0);
 
-	glClearColor(0, 0, 0, 0);
+	/*glClearColor(0, 0, 0, 0);
 
 	glClearDepth(1.0f);
 	glEnable(GL_DEPTH_TEST);
 
 	glEnable(GL_TEXTURE_2D);
 
-	glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);*/
 
 	glutDisplayFunc(display);
 	glutKeyboardFunc(keyboardCB);
